@@ -8,6 +8,5 @@ VERSION=$(cat VERSION)
 git tag "v${VERSION}"
 git push --tags
 
-docker build -t ${IMAGE}:${VERSION} .
-#docker tag ${IMAGE}:${VERSION}
+docker build --build-arg version=$VERSION -t ${IMAGE}:${VERSION} .
 docker push ${IMAGE}:${VERSION}
