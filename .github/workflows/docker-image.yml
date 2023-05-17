@@ -24,3 +24,4 @@ jobs:
         with:
           push: true
           tags: dtseiler/hello-world:latest, dtseiler/hello-world:${{ env.VERSION }}
+          build-args: version=${{ env.VERSION }}
