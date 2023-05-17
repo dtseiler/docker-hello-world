@@ -1,10 +1,11 @@
 on:
   push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    branches:
+      - 'main'
+    paths:
+        - 'VERSION'
 
-name: Create Release
+name: Create GitHub Release
 
 jobs:
   build:
@@ -13,6 +14,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Get VERSION
+        run: |
+          VERSION=$(cat VERSION)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Create Git Tag
+        run: |
+          git tag "v${{ env.VERSION }}"
+          git push --tags
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
